@@ -3,10 +3,7 @@
 (function () {
     "use strict";
 
-    angular.module('angular-appinsights', [])
-
-        .provider('insights', function () {
-
+        function insightsProvider() {
             var _appId,
                 _appName;
 
@@ -60,9 +57,10 @@
             this.$get = function() {
                 return new Insights();
             };
-        })
+        }
 
-        .run(['$rootScope', '$location', 'insights'], function($rootScope, $location, insights) {
+        insightsRun.$inject = ['$rootScope', '$location', 'insights'];
+        function insightsRun($rootScope, $location, insights) {
             $rootScope.$on('$locationChangeSuccess', function() {
                 var pagePath;
                 try {
@@ -73,5 +71,9 @@
                     insights.logPageView(pagePath);
                 }
             });
-        });
+        }
+
+    angular.module('angular-appinsights', [])
+        .provider('insights', insightsProvider)
+        .run(insightsRun);
 }());
