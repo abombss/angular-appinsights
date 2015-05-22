@@ -17,12 +17,12 @@
 
                 if (appInsights && appId && appInsights.start) {
                     appInsights.start(appId);
-                } 
-				if (appInsights && appId && !appInsights.start)
-				{
-				    appInsights=appInsights({ instrumentationKey: appId });
-				}
+                }
 
+                if (appInsights && appId && !appInsights.start)
+                {
+                    appInsights = appInsights({ instrumentationKey: appId });
+                }
             };
 
             function Insights () {
@@ -31,11 +31,11 @@
                     
                     if (appInsights && _appId && appInsights.logEvent) {
                         appInsights.logEvent(event, properties, property);
-                    } 
-					if (appInsights && _appId && appInsights.trackEvent){
-					    appInsights.trackEvent(event, properties, property);
-					}
+                    }
 
+                    if (appInsights && _appId && appInsights.trackEvent){
+                        appInsights.trackEvent(event, properties, property);
+                    }
                 },
 
                 _logPageView = function (page) {
@@ -43,10 +43,10 @@
                     if (appInsights && _appId && appInsights.logPageView) {
                         appInsights.logPageView(page);
                     }
-					if (appInsights && _appId && appInsights.trackPageView) {
+
+                    if (appInsights && _appId && appInsights.trackPageView) {
                         appInsights.trackPageView(page);
                     }
-
                 };
 
                 return {
@@ -60,7 +60,6 @@
             this.$get = function() {
                 return new Insights();
             };
-
         })
 
         .run(['$rootScope', '$location', 'insights'], function($rootScope, $location, insights) {
@@ -75,5 +74,4 @@
                 }
             });
         });
-
 }());
